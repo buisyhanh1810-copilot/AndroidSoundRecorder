@@ -1,4 +1,4 @@
-name: Build Recorder APK
+name: Build APK
 
 on:
   push:
@@ -27,13 +27,28 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: '8.5'
+          gradle-version: '8.4'
+
+      - name: Diagnose project structure
+        run: |
+          echo "--- repo root ---"
+          ls -la
+          echo "--- find build.gradle files ---"
+          find . -name "build.gradle" -o -name "build.gradle.kts"
+          echo "--- find settings.gradle ---"
+          find . -name "settings.gradle" -o -name "settings.gradle.kts"
+          echo "--- gradle version ---"
+          gradle -v
+          echo "--- gradle projects ---"
+          gradle projects --no-daemon
+          echo "--- gradle tasks (app) ---"
+          gradle :app:tasks --all --no-daemon || echo "app project or its tasks not found"
 
       - name: Build debug APK
-        run: gradle assembleDebug --no-daemon
+        run: gradle assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: vs-recorder-debug-apk
-          path: app/build/outputs/apk/debug/soundRecorder.apk
+          path: app/build/outputs/apk/debug/*.apk
