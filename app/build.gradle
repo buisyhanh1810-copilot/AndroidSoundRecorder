@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.vsanalyzer'
+    namespace 'com.example.vsrecorder'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.vsanalyzer"
+        applicationId "com.example.vsrecorder"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -23,7 +23,6 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core:1.12.0'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
 
 configurations.all {
